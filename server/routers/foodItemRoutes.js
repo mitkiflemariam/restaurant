@@ -2,7 +2,7 @@ const express = require("express");
 const FoodItem = require("../models/fooditem"); // Ensure correct path
 const router = express.Router();
 
-// Create a new food item
+// Create a new food item and store it in mongo Db
 router.post("/", async (req, res) => {
   try {
     const foodItem = new FoodItem(req.body);
