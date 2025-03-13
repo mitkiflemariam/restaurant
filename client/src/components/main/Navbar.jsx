@@ -33,12 +33,24 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex gap-4">
-        <Button variant="ghost" className="w-24">
+        {/* <Button variant="ghost" className="w-24">
           Sign in
         </Button>
         <Button variant="default" className="w-24">
           Sign up
-        </Button>
+        </Button> */}
+        <Link
+          to="/login"
+          className="bg-blue-600 px-5 py-2 rounded-md hover:bg-blue-500"
+        >
+          Sign in
+        </Link>
+        <Link
+          to="/signup"
+          className="bg-blue-600 px-5 py-2 rounded-md hover:bg-blue-500"
+        >
+          Sign Up
+        </Link>
       </div>
     </nav>
   );

@@ -27,6 +27,8 @@ function App({ children }) {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/confirmation" element={<Confirmation />} />
               <Route path="/order" element={<Order />} />
+              <Route path="login" element={<Login />} />
+              <Route path="signup" element={<SignUp />} />
             </Routes>
             {children}
             <Toaster />
