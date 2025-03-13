@@ -7,19 +7,32 @@ import {
 
 import Home from "./components/main/Home";
 import { Toaster } from "./components/ui/toaster";
+import { MainLayout } from "./components/layout/MainLayout";
+import AdminDashboard from "./pages/AdminDashboard";
+import CustomerDashboard from "./pages/CustomerDashboard";
+import Checkout from "./pages/Checkout";
+import Confirmation from "./pages/Confirmation";
+import Order from "./pages/Order";
 
 function App({ children }) {
   return (
     <>
-        <BrowserRouter>
-          <div className="relative min-h-screen flex flex-col dark:bg-[#1F1F1F]">
+      <BrowserRouter>
+        <MainLayout>
+          <div className="relative flex flex-col">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/customer" element={<CustomerDashboard />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/confirmation" element={<Confirmation />} />
+              <Route path="/order" element={<Order />} />
             </Routes>
             {children}
             <Toaster />
           </div>
-        </BrowserRouter>
+        </MainLayout>
+      </BrowserRouter>
     </>
   );
 }
