@@ -5,21 +5,18 @@ const router = express.Router();
 // Create a new food item
 router.post("/", async (req, res) => {
   try {
+    const { name, price, category } = req.body;
+
+    // Validate required fields
+    if (!name || !price || !category) {
+      return res.status(400).json({ error: "Missing required fields: name, price, category" });
+    }
+
     const foodItem = new FoodItem(req.body);
     await foodItem.save();
     res.status(201).json(foodItem);
   } catch (error) {
     res.status(400).json({ error: error.message });
-  }
-});
-
-// Get all food items
-router.get("/", async (req, res) => {
-  try {
-    const foodItems = await FoodItem.find();
-    res.json(foodItems);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
   }
 });
 

@@ -2,17 +2,18 @@ const express = require("express");
 const PORT = 3000;
 const connectDB = require("./db");
 const userRoutes = require("./routers/userrouter");
-const foodItemRoutes = require("./routes/foodItemRoutes");
+const foodItemRoutes = require("./routers/foodItemRoutes");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/food-items", foodItemRoutes);
 
-app.use(express.json());
+
 
 async function startApi() {
   try {

@@ -4,40 +4,35 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-// import Header from "./header";
+import { loginUser } from "@/lib/utils";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate(); // Initialize navigation
-
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Retrieve users from localStorage
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Check if user exists with matching credentials
-    const user = existingUsers.find(
-      (user) =>
-        user.email === formData.email && user.password === formData.password
-    );
-
-    if (user) {
-      alert("Logged In Successfully!");
-      localStorage.setItem("loggedInUser", JSON.stringify(user)); // Store logged-in user
-      navigate("/"); // Redirect to dashboard or home
-    } else {
-      alert("Invalid email or password. Please try again.");
+    setIsLoading(true);
+    try {
+      const response = await loginUser(formData);
+      localStorage.setItem("token", response.data.token);
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.error("Error details:", err.response?.data); // Log server response
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
-
   return (
     <>
-      {/* <Header /> */}
       <br />
       <div className="flex items-center text-black justify-center min-h-screen ">
         <div className="p-6 shadow-xl rounded-lg border bg-card text-card-foreground overflow-hidden flex flex-col h-full w-96">
@@ -49,6 +44,7 @@ export default function Login() {
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="email@example.com"
@@ -79,6 +75,9 @@ export default function Login() {
               </Link>
             </div>
           </form>
+          <p>
+            <a href="/request-reset">Forgot Password?</a>
+          </p>
         </div>
       </div>
     </>

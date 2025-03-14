@@ -4,12 +4,20 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/userModel"); // Adjust path based on your structure
 const router = express.Router();
 require("dotenv").config();
+const cors = require("cors");
+// Enable CORS for all routes
+router.use(
+  cors({
+    origin: "http://localhost:5173", // Allow frontend to make requests
+    credentials: true, // Allow cookies if needed
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed request methods
+  })
+);
 
 // User Registration
 router.post("/register", async (req, res) => {
   try {
     const { firstname, lastname, username, email, password, role } = req.body;
-    console.log(firstname, lastname, username, email, password, role);
 
     // Check if user already exists
     let userExists = await User.findOne({ email });
