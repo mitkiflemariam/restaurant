@@ -47,7 +47,6 @@ export default function SignUp() {
 
   return (
     <>
-      <br />
       <div className="flex items-center text-black justify-center min-h-screen ">
         <div className="p-6 shadow-xl rounded-lg border bg-card text-card-foreground overflow-hidden flex flex-col h-full w-96">
           <h2 className="text-2xl font-bold text-center mb-4">Sign up</h2>
