@@ -6,10 +6,13 @@ import { Input } from "../ui/input";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
-    fName: "",
+    firstname: "",
+    lastname: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    role: "user",
   });
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -38,9 +41,12 @@ export default function SignUp() {
 
     // Save new user
     const newUser = {
-      fName: formData.fName,
-      email: formData.email,
-      password: formData.password, // Ideally, hash the password before storing
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      role: "", // Ideally, hash the password before storing
     };
 
     existingUsers.push(newUser);
@@ -67,16 +73,39 @@ export default function SignUp() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
-                <Label htmlFor="email">Full Name</Label>
-                <Input
+                <label className="block text-gray-600">Last Name</label>
+                <input
                   type="text"
-                  name="fName"
-                  value={formData.fName}
+                  name="lastname"
+                  value={formData.lastname}
                   onChange={handleChange}
-                  placeholder="Full Name"
                   required
+                  className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 />
               </div>
+              <div className="grid gap-2">
+                <label className="block text-gray-600">First Name</label>
+                <input
+                  type="text"
+                  name="firstname"
+                  value={formData.firstname}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+              <div className="grid gap-2">
+                <label className="block text-gray-600">User Name</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                />
+              </div>
+
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
