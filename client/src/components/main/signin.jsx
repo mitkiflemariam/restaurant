@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { Button } from "../ui/button";
+import { Card } from "../ui/card";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 // import Header from "./header";
 
 export default function Login() {
@@ -35,45 +39,46 @@ export default function Login() {
     <>
       {/* <Header /> */}
       <br />
-      <div className="flex items-center text-black justify-center min-h-screen bg-gray-100">
-        <div className="bg-white p-6 rounded-2xl shadow-xl w-96">
+      <div className="flex items-center text-black justify-center min-h-screen ">
+        <div className="p-6 shadow-xl rounded-lg border bg-card text-card-foreground overflow-hidden flex flex-col h-full w-96">
           <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-600">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              />
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="email@example.com"
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                </div>
+                <Input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  placeholder="Password"
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                Login
+              </Button>
             </div>
-            <div>
-              <label className="block text-gray-600">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              />
+            <div className="mt-4 text-center text-sm">
+              Don't have an account?{" "}
+              <Link to="/signup" className="underline" aria-label="sign up">
+                Sign up
+              </Link>
             </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
-            >
-              Login
-            </button>
           </form>
-          <p className="text-center text-gray-600 mt-4">
-            Don&apos;t have an account?
-            <Link to="/signup" className="text-blue-500 ml-1 hover:underline">
-              Sign Up
-            </Link>
-          </p>
         </div>
       </div>
     </>

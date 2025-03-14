@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -58,67 +61,68 @@ export default function SignUp() {
   return (
     <>
       <br />
-      <div className="flex items-center text-black justify-center min-h-screen bg-gray-100">
-        <div className="bg-white p-6 rounded-2xl shadow-xl w-96">
-          <h2 className="text-2xl font-bold text-center mb-4">Sign Up</h2>
+      <div className="flex items-center text-black justify-center min-h-screen ">
+        <div className="p-6 shadow-xl rounded-lg border bg-card text-card-foreground overflow-hidden flex flex-col h-full w-96">
+          <h2 className="text-2xl font-bold text-center mb-4">Sign up</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-gray-600">Full Name</label>
-              <input
-                type="text"
-                name="fName"
-                value={formData.fName}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              />
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Full Name</Label>
+                <Input
+                  type="text"
+                  name="fName"
+                  value={formData.fName}
+                  onChange={handleChange}
+                  placeholder="Full Name"
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="email">Password</Label>
+                <Input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  required
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <Label htmlFor="email">Confirm Password</Label>
+                <Input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  required
+                />
+              </div>
+
+              <Button type="submit" className="w-full">
+                Register
+              </Button>
             </div>
-            <div>
-              <label className="block text-gray-600">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              />
+            <div className="mt-4 text-center text-sm">
+              Already have an account?{" "}
+              <Link to="/login" className="underline" aria-label="sign up">
+                Sign in
+              </Link>
             </div>
-            <div>
-              <label className="block text-gray-600">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-            <div>
-              <label className="block text-gray-600">Confirm Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
-            >
-              Sign Up
-            </button>
           </form>
-          <p className="text-center text-gray-600 mt-4">
-            Already have an account?
-            <a href="/login" className="text-blue-500 ml-1 hover:underline">
-              Login
-            </a>
-          </p>
         </div>
       </div>
     </>

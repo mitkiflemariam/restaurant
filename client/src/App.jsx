@@ -13,6 +13,8 @@ import CustomerDashboard from "./pages/CustomerDashboard";
 import Checkout from "./pages/Checkout";
 import Confirmation from "./pages/Confirmation";
 import Order from "./pages/Order";
+import Login from "./components/main/signin";
+import SignUp from "./components/main/signup";
 
 function App({ children }) {
   return (
@@ -27,8 +29,8 @@ function App({ children }) {
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/confirmation" element={<Confirmation />} />
               <Route path="/order" element={<Order />} />
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
             </Routes>
             {children}
             <Toaster />
