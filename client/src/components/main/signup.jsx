@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { registerUser } from "@/lib/utils";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -14,54 +19,30 @@ export default function SignUp() {
     confirmPassword: "",
     role: "user",
   });
-  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setIsLoading(true);
 
+    // Client-side validation
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match");
+      setIsLoading(false);
       return;
     }
 
-    // Get existing users from localStorage
-    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Check if email already exists
-    const emailExists = existingUsers.some(
-      (user) => user.email === formData.email
-    );
-    if (emailExists) {
-      alert("Email already exists! Please use a different email.");
-      return;
+    try {
+      const response = await registerUser(formData);
+      navigate("/login", { replace: true });
+    } catch (error) {
+      setError(error.response?.data?.message || "Registration failed");
+    } finally {
+      setIsLoading(false);
     }
-
-    // Save new user
-    const newUser = {
-      firstname: "",
-      lastname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      role: "", // Ideally, hash the password before storing
-    };
-
-    existingUsers.push(newUser);
-    localStorage.setItem("users", JSON.stringify(existingUsers));
-
-    alert("Signed Up Successfully!");
-    navigate("/login");
-
-    // Clear form
-    setFormData({
-      fName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
   };
 
   return (

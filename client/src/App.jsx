@@ -15,6 +15,8 @@ import Confirmation from "./pages/Confirmation";
 import Order from "./pages/Order";
 import Login from "./components/main/signin";
 import SignUp from "./components/main/signup";
+import ResetPassword from "./components/main/resetpassword";
+import RequestReset from "./components/main/RequestReset";
 
 function App({ children }) {
   return (
@@ -31,6 +33,8 @@ function App({ children }) {
               <Route path="/order" element={<Order />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/request-reset" element={<RequestReset />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
             </Routes>
             {children}
             <Toaster />
