@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import { AuthContext } from "@/AuthContext";
 
 const Navbar = () => {
+  const { isLoggedIn, userName, logout } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logout();
+  };
   return (
     <nav className="flex justify-between items-center py-6 px-8">
       <div className="text-2xl font-bold">
@@ -32,18 +38,28 @@ const Navbar = () => {
           Order
         </Link>
       </div>
-      <div className="flex gap-4">
-        <Button variant="ghost" className="w-24" asChild>
-          <Link to="/login" aria-label="login">
-            Sign in
-          </Link>
-        </Button>
 
-        <Button variant="default" className="w-24" asChild>
-          <Link to="/signup" aria-label="sign up">
-            Sign up
-          </Link>
-        </Button>
+      <div>
+        {isLoggedIn ? (
+          <div className="flex space-x-8">
+            <p>Welcome, {userName || "User"}!</p>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        ) : (
+          <div className="flex gap-4">
+            <Button variant="ghost" className="w-24" asChild>
+              <Link to="/login" aria-label="login">
+                Sign in
+              </Link>
+            </Button>
+
+            <Button variant="default" className="w-24" asChild>
+              <Link to="/signup" aria-label="sign up">
+                Sign up
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </nav>
   );

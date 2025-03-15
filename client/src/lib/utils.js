@@ -26,8 +26,9 @@ export const loginUser = async (userData) => {
       console.error("Login failed:", errorData);
       throw new Error(errorData.message || "Login failed");
     }
-
-    return response.json(); // Returns { message: "...", token: "..." }
+    const data = await response.json();
+    console.log("Login response: ", data);
+    return data; // Returns { message: "...", token: "..." }
   } catch (error) {
     throw error;
   }

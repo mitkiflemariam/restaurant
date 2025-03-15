@@ -1,16 +1,18 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { loginUser } from "@/lib/utils";
+import { AuthContext } from "@/AuthContext";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate(); // Initialize navigation
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useContext(AuthContext);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -25,12 +27,13 @@ export default function Login() {
         throw new Error("Please fill in all fields");
       }
       const response = await loginUser(formData);
-      console.log("Response:", response.data);
-      if (!response?.token) {
+      console.log("Response:", response);
+      if (!response.token) {
         throw new Error("Invalid response from server");
       }
 
-      localStorage.setItem("token", response.token);
+      // localStorage.setItem("token", response.token);
+      login(response.token, response.username || formData.email);
       navigate("/", { replace: true });
     } catch (err) {
       // console.error("Error details:", err.response?.data); // Log server response
