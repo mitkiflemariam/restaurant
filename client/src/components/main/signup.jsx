@@ -27,6 +27,7 @@ export default function SignUp() {
     e.preventDefault();
     setError("");
     setIsLoading(true);
+    
 
     // Client-side validation
     if (formData.password !== formData.confirmPassword) {
@@ -34,9 +35,10 @@ export default function SignUp() {
       setIsLoading(false);
       return;
     }
-
+    console.log("Sending to registerUser:", formData)
     try {
       const response = await registerUser(formData);
+      console.log("Response:", response);
       navigate("/login", { replace: true });
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed");
@@ -50,6 +52,11 @@ export default function SignUp() {
       <div className="flex items-center text-black justify-center min-h-screen ">
         <div className="p-6 shadow-xl rounded-lg border bg-card text-card-foreground overflow-hidden flex flex-col h-full w-96">
           <h2 className="text-2xl font-bold text-center mb-4">Sign up</h2>
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+              {error}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
@@ -60,6 +67,7 @@ export default function SignUp() {
                   value={formData.lastname}
                   onChange={handleChange}
                   required
+                  disabled={isLoading}
                   className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 />
               </div>
@@ -71,6 +79,7 @@ export default function SignUp() {
                   value={formData.firstname}
                   onChange={handleChange}
                   required
+                  disabled={isLoading}
                   className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 />
               </div>
@@ -82,6 +91,7 @@ export default function SignUp() {
                   value={formData.username}
                   onChange={handleChange}
                   required
+                  disabled={isLoading}
                   className="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 />
               </div>
@@ -95,6 +105,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   placeholder="Email"
                   required
+                  disabled={isLoading}
                 />
               </div>
               <div className="grid gap-2">
@@ -106,6 +117,7 @@ export default function SignUp() {
                   onChange={handleChange}
                   placeholder="Password"
                   required
+                  disabled={isLoading}
                 />
               </div>
 
@@ -121,8 +133,8 @@ export default function SignUp() {
                 />
               </div>
 
-              <Button type="submit" className="w-full">
-                Register
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? "Registering..." : "Register"}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
