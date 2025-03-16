@@ -6,6 +6,37 @@ const router = express.Router();
 require("dotenv").config();
 
 // User Registration
+// router.post("/register", async (req, res) => {
+//   try {
+//     const { firstname, lastname, username, email, password, role } = req.body;
+
+//     // Check if user already exists
+//     let userExists = await User.findOne({ email });
+//     if (userExists) {
+//       return res.status(400).json({ message: "User already exists" });
+//     }
+
+//     // Hash Password
+//     const salt = await bcrypt.genSalt(10);
+//     const hashedPassword = await bcrypt.hash(password, salt);
+
+//     // Create New User
+//     const newUser = new User({
+//       firstname,
+//       lastname,
+//       username,
+//       email,
+//       password: hashedPassword,
+//       role: role || "customer",
+//     });
+
+//     await newUser.save();
+//     res.status(201).json({ message: "User registered successfully" });
+//   } catch (error) {
+//     res.status(500).json({ message: "Server Error", error });
+//   }
+// });
+
 router.post("/register", async (req, res) => {
   try {
     const { firstname, lastname, username, email, password, role } = req.body;
@@ -20,20 +51,26 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create New User
+    // Create New User with explicit role
     const newUser = new User({
       firstname,
       lastname,
       username,
       email,
       password: hashedPassword,
-      role,
+      role: role || "customer", // Ensure role is always set
     });
 
     await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res
+      .status(201)
+      .json({
+        message: "User registered successfully",
+        user: { firstname, username, role: newUser.role },
+      });
   } catch (error) {
-    res.status(500).json({ message: "Server Error", error });
+    console.error("Registration error:", error);
+    res.status(500).json({ message: "Server Error", error: error.message });
   }
 });
 
@@ -61,8 +98,9 @@ router.post("/login", async (req, res) => {
     );
 
     const username = user.username;
-    console.log("username = ", username);
-    res.json({ message: "Login successful", token,  username });
+    const role = user.role;
+
+    res.json({ message: "Login successful", token, username, role });
   } catch (error) {
     res.status(500).json({ message: "Server Error", error });
   }

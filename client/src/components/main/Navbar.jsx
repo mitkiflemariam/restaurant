@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "@/AuthContext";
 
 const Navbar = () => {
-  const { isLoggedIn, userName, logout } = useContext(AuthContext);
+  const { isLoggedIn, userName, role, logout } = useContext(AuthContext);
 
   const handleLogout = () => {
     logout();
@@ -19,13 +19,15 @@ const Navbar = () => {
       </div>
 
       <div className="flex space-x-8">
-        <Link to="/admin" aria-label="Admin Dashboard">
-          Admin Dashboard
-        </Link>
+        {role === "admin" && (
+          <Link to="/admin" aria-label="Admin Dashboard">
+            Admin Dashboard
+          </Link>
+        )}
 
-        <Link to="/customer" aria-label="Customer Dashboard">
+        {/* <Link to="/customer" aria-label="Customer Dashboard">
           Customer Dashboard
-        </Link>
+        </Link> */}
 
         <Link to="/checkout" aria-label="checkout">
           Checkout
