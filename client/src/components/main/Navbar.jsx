@@ -10,7 +10,8 @@ const Navbar = () => {
     logout();
   };
   return (
-    <nav className="flex justify-between items-center py-6 px-8">
+    // <nav className="flex justify-between items-center py-6 px-8 ">
+    <nav className="fixed top-0 left-0 w-full bg-black text-white z-50 flex justify-between items-center py-4 px-8 shadow-md">
       <div className="text-2xl font-bold">
         <Link to="/" aria-label="Home">
           Restaurant
