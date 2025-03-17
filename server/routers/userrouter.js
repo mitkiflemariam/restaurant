@@ -10,7 +10,7 @@ const swaggerDocs = require("../utility/swagger");
 
 /**
  * @openapi
- * /register:
+ * /api/users/register:
  *   post:
  *     tags:
  *       - UserRegistration
