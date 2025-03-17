@@ -1,0 +1,131 @@
+services:
+  node_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node_app_container
+    ports:
+      - "3000:3000"
+    # Temporarily disable volumes to test with the built image
+    # volumes:
+    #   - .:/usr/src/app
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - mongodb
+    restart: always
+    # Ensure no command override
+    command: ["node", "server.js"]
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
+
+
+
+
+
+# version: "3.8"
+# services:
+#   node_app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: node_app_container
+#     ports:
+#       - "5000:5000"
+#     volumes:
+#       - .:/usr/src/app
+#     environment:
+#       - NODE_ENV=development
+#     depends_on:
+#       - mongodb
+#     restart: always
+
+#   mongodb:
+#     image: mongo:latest
+#     container_name: mongodb_container
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongodb_data:/data/db
+
+# volumes:
+#   mongodb_data:
+
+# version: '3.8'
+
+# services:
+#   mongodb:
+#     image: mongo:latest
+#     container_name: mongo_container
+#     restart: always
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: Jestinod98661
+#       MONGO_INITDB_DATABASE: restaurant
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo_data:/data/db
+
+#   nodeapp:
+#     build: .
+#     container_name: node_app_container
+#     restart: always
+#     depends_on:
+#       - mongodb
+#     ports:
+#       - "5000:5000"
+#     environment:
+#       DB_USER: root
+#       DB_PASSWORD: Jestinod98661
+#       DB_NAME: restaurant
+#       DB_HOST: mongodb
+#       DB_PORT: 27017
+
+# volumes:
+#   mongo_data:
+
+# # version: '3.8'
+
+# services:
+#   postgres:
+#     image: postgres:latest
+#     container_name: postgres_container
+#     restart: always
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: jestinod98661
+#       POSTGRES_DB: restaurant
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+
+#   nodeapp:
+#     build: .
+#     container_name: node_app_container
+#     restart: always
+#     depends_on:
+#       - postgres
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       DB_USER: postgres
+#       DB_PASSWORD: jestinod98661
+#       DB_NAME: restaurant
+#       # DB_HOST: postgres
+#       DB_HOST: host.docker.internal
+#       DB_PORT: 5432
+
+# volumes:
+#   postgres_data:
+

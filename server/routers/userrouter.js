@@ -5,38 +5,97 @@ const User = require("../models/userModel"); // Adjust path based on your struct
 const router = express.Router();
 require("dotenv").config();
 
-// User Registration
-// router.post("/register", async (req, res) => {
-//   try {
-//     const { firstname, lastname, username, email, password, role } = req.body;
+const swaggerDocs = require("../utility/swagger");
 
-//     // Check if user already exists
-//     let userExists = await User.findOne({ email });
-//     if (userExists) {
-//       return res.status(400).json({ message: "User already exists" });
-//     }
 
-//     // Hash Password
-//     const salt = await bcrypt.genSalt(10);
-//     const hashedPassword = await bcrypt.hash(password, salt);
-
-//     // Create New User
-//     const newUser = new User({
-//       firstname,
-//       lastname,
-//       username,
-//       email,
-//       password: hashedPassword,
-//       role: role || "customer",
-//     });
-
-//     await newUser.save();
-//     res.status(201).json({ message: "User registered successfully" });
-//   } catch (error) {
-//     res.status(500).json({ message: "Server Error", error });
-//   }
-// });
-
+/**
+ * @openapi
+ * /register:
+ *   post:
+ *     tags:
+ *       - UserRegistration
+ *     summary: Register a new user
+ *     description: Registers a new user with the provided details. The role defaults to "customer" if not specified.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstname
+ *               - lastname
+ *               - username
+ *               - email
+ *               - password
+ *             properties:
+ *               firstname:
+ *                 type: string
+ *                 example: John
+ *               lastname:
+ *                 type: string
+ *                 example: Doe
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: john.doe@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: Password123!
+ *               role:
+ *                 type: string
+ *                 enum: [customer, admin]
+ *                 default: customer
+ *                 example: customer
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User registered successfully
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *
+ *                     firstname:
+ *                       type: string
+ *                       example: John
+ *                     username:
+ *                       type: string
+ *                       example: johndoe
+ *                     role:
+ *                       type: string
+ *                       example: customer
+ *       400:
+ *         description: Bad request - User already exists or validation failed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Email already exists
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Server Error
+ */
 router.post("/register", async (req, res) => {
   try {
     const { firstname, lastname, username, email, password, role } = req.body;
@@ -62,12 +121,10 @@ router.post("/register", async (req, res) => {
     });
 
     await newUser.save();
-    res
-      .status(201)
-      .json({
-        message: "User registered successfully",
-        user: { firstname, username, role: newUser.role },
-      });
+    res.status(201).json({
+      message: "User registered successfully",
+      user: { firstname, username, role: newUser.role },
+    });
   } catch (error) {
     console.error("Registration error:", error);
     res.status(500).json({ message: "Server Error", error: error.message });
@@ -115,5 +172,15 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Server Error", error });
   }
 });
+
+// router.get("/users", async (req, res) => {
+//   try {
+//     const result = await pool.query("SELECT * FROM users");
+//     res.json(result.rows);
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("Server error");
+//   }
+// });
 
 module.exports = router;
