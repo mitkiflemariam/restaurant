@@ -18,6 +18,8 @@ import SignUp from "./components/main/signup";
 import ResetPassword from "./components/main/resetpassword";
 import RequestReset from "./components/main/RequestReset";
 
+// import swaggerDocs from "@/lib/swagger";
+
 function App({ children }) {
   return (
     <>
@@ -34,7 +36,10 @@ function App({ children }) {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/request-reset" element={<RequestReset />} />
-              <Route path="/reset-password/:token" element={<ResetPassword />} />
+              <Route
+                path="/reset-password/:token"
+                element={<ResetPassword />}
+              />
             </Routes>
             {children}
             <Toaster />
