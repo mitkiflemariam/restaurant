@@ -18,8 +18,8 @@ const app = express();
 // Enable CORS for all routes
 app.use(
   cors({
-    // origin: "http://localhost:5173", // Allow frontend to make requests
-    origin: process.env.FRONTEND_URL, // Allow frontend to make requests
+    origin: "http://localhost:5173", // Allow frontend to make requests
+    // origin: process.env.FRONTEND_URL, // Allow frontend to make requests
     credentials: true, // Allow cookies if needed
     methods: ["GET", "POST", "PUT", "DELETE"], // Allowed request methods
   })
