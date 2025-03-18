@@ -27,7 +27,6 @@ export default function SignUp() {
     e.preventDefault();
     setError("");
     setIsLoading(true);
-    
 
     // Client-side validation
     if (formData.password !== formData.confirmPassword) {
@@ -35,7 +34,7 @@ export default function SignUp() {
       setIsLoading(false);
       return;
     }
-    console.log("Sending to registerUser:", formData)
+    console.log("Sending to registerUser:", formData);
     try {
       const response = await registerUser(formData);
       console.log("Response:", response);
@@ -61,7 +60,7 @@ export default function SignUp() {
             <div className="flex flex-col gap-6">
               <div className="grid gap-2">
                 <label className="block text-gray-600">Last Name</label>
-                <input
+                <Input
                   type="text"
                   name="lastname"
                   value={formData.lastname}
@@ -73,7 +72,7 @@ export default function SignUp() {
               </div>
               <div className="grid gap-2">
                 <label className="block text-gray-600">First Name</label>
-                <input
+                <Input
                   type="text"
                   name="firstname"
                   value={formData.firstname}
@@ -85,7 +84,7 @@ export default function SignUp() {
               </div>
               <div className="grid gap-2">
                 <label className="block text-gray-600">User Name</label>
-                <input
+                <Input
                   type="text"
                   name="username"
                   value={formData.username}

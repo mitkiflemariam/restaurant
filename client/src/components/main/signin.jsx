@@ -75,6 +75,13 @@ export default function Login() {
               <div className="grid gap-2">
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
+                  <Link
+                    to="/request-reset"
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    aria-label="password reset"
+                  >
+                    Forgot Password?
+                  </Link>
                 </div>
                 <Input
                   type="password"
@@ -94,21 +101,12 @@ export default function Login() {
             <div className="mt-4 text-center text-sm">
               <p>
                 Don't have an account?{" "}
-                <Link
-                  to="/signup"
-                  className="text-blue-600 hover:underline"
-                  aria-label="sign up"
-                >
+                <Link to="/signup" className="underline" aria-label="sign up">
                   Sign up
                 </Link>
               </p>
             </div>
           </form>
-          <p>
-            <Link to="/request-reset" className="text-blue-600 hover:underline">
-              Forgot Password?
-            </Link>
-          </p>
         </div>
       </div>
     </>

@@ -50,7 +50,7 @@ const Home = () => {
   ];
 
   return (
-    <main className="flex flex-col w-full min-h-screen bg-white p-6">
+    <main className="flex flex-col w-full min-h-screen bg-white p-6 shadow-md">
       <section className="relative h-[40vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-10"></div>
         <div className="bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center absolute inset-0"></div>
