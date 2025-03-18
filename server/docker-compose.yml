@@ -1,21 +1,21 @@
 services:
-  node_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: node_app_container
-    ports:
-      - "3000:3000"
-    # Temporarily disable volumes to test with the built image
-    # volumes:
-    #   - .:/usr/src/app
-    environment:
-      - NODE_ENV=development
-    depends_on:
-      - mongodb
-    restart: always
-    # Ensure no command override
-    command: ["node", "server.js"]
+  # node_app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: node_app_container
+  #   ports:
+  #     - "3000:3000"
+  #   # Temporarily disable volumes to test with the built image
+  #   # volumes:
+  #   #   - .:/usr/src/app
+  #   environment:
+  #     - NODE_ENV=development
+  #   depends_on:
+  #     - mongodb
+  #   restart: always
+  #   # Ensure no command override
+  #   command: ["node", "server.js"]
 
   mongodb:
     image: mongo:latest
