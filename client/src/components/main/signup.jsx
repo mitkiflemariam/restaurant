@@ -17,7 +17,7 @@ export default function SignUp() {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "user",
+    role: "customer",
   });
 
   const handleChange = (e) => {
@@ -27,7 +27,6 @@ export default function SignUp() {
     e.preventDefault();
     setError("");
     setIsLoading(true);
-    
 
     // Client-side validation
     if (formData.password !== formData.confirmPassword) {
@@ -35,7 +34,7 @@ export default function SignUp() {
       setIsLoading(false);
       return;
     }
-    console.log("Sending to registerUser:", formData)
+    console.log("Sending to registerUser:", formData);
     try {
       const response = await registerUser(formData);
       console.log("Response:", response);
