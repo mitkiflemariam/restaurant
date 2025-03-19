@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -23,14 +23,6 @@ const Confirmation = () => {
       minute: "2-digit",
     }),
     estimatedDelivery: "30-45 minutes",
-  };
-
-  const handleReturnHome = () => {
-    navigate("/");
-  };
-
-  const handleOrder = () => {
-    navigate("/order");
   };
 
   return (
@@ -74,15 +66,15 @@ const Confirmation = () => {
         </div>
       </CardContent>
       <CardFooter className="flex flex-col space-y-2 sm:flex-row justify-center sm:space-x-2 sm:space-y-0">
-        <Button
-          variant="outline"
-          onClick={handleReturnHome}
-          className="w-full sm:w-auto"
-        >
-          Return to Home
+        <Button variant="outline" className="w-24" asChild>
+          <Link to="/" aria-label="login">
+            Home
+          </Link>
         </Button>
-        <Button onClick={handleOrder} className="w-full sm:w-auto">
-          Order Again
+        <Button variant="default" className="w-24" asChild>
+          <Link to="/order" aria-label="login">
+            Order Again
+          </Link>
         </Button>
       </CardFooter>
     </Card>
