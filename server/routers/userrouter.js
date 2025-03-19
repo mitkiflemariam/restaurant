@@ -13,7 +13,7 @@ const swaggerDocs = require("../utility/swagger");
  * /api/users/register:
  *   post:
  *     tags:
- *       - UserRegistration
+ *       - User Registration
  *     summary: Register a new user
  *     description: Registers a new user with the provided details. The role defaults to "customer" if not specified.
  *     requestBody:
@@ -132,6 +132,59 @@ router.post("/register", async (req, res) => {
 });
 
 // User Login
+
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: User login
+ *     tags: [Users Login]
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: john@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Login successful
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOi...
+ *                 username:
+ *                   type: string
+ *                   example: john_doe
+ *                 role:
+ *                   type: string
+ *                   example: customer
+ *                 firstName:
+ *                   type: string
+ *                   example: John
+ *       400:
+ *         description: Invalid credentials
+ *       500:
+ *         description: Server error
+ */
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
