@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { AuthContext } from "@/AuthContext";
+import { ShoppingBag } from "lucide-react";
 
 const Navbar = () => {
   const { isLoggedIn, userName, role, logout } = useContext(AuthContext);
@@ -46,7 +47,13 @@ const Navbar = () => {
         </Link>
       </div>
 
-      <div>
+      <div className="flex items-center gap-6">
+        <Link to="/order" className="relative" aria-label="Shopping Cart">
+          <ShoppingBag className="h-6 w-6 text-white" />
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+            0
+          </span>
+        </Link>
         {isLoggedIn ? (
           <div className="flex space-x-8">
             <p>Welcome, {userName || "User"}!</p>
