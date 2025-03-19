@@ -13,8 +13,8 @@ import CustomerDashboard from "./pages/CustomerDashboard";
 import Checkout from "./pages/Checkout";
 import Confirmation from "./pages/Confirmation";
 import Order from "./pages/Order";
-import Login from "./components/main/signin";
-import SignUp from "./components/main/signup";
+import Login from "./components/main/Signin";
+import SignUp from "./components/main/Signup";
 import ResetPassword from "./components/main/resetpassword";
 import RequestReset from "./components/main/RequestReset";
 
