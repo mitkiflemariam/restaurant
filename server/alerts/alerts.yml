@@ -1,0 +1,9 @@
+groups:
+  - name: node_app_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 1m
+        annotations:
+          summary: "High error rate on Node.js app"
+          description: "Error rate (5xx) is above 5% for the last 5 minutes (current: {{ $value }}%)."

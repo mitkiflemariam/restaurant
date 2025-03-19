@@ -8,12 +8,56 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const { Pool } = require("pg");
 
+const promClient = require("prom-client");
+
 const swaggerDocs = require("./utility/swagger");
 
    
 dotenv.config();
 
 const app = express();
+
+// Enable Prometheus metrics collection
+const collectDefaultMetrics = promClient.collectDefaultMetrics;
+const Registry = promClient.Registry;
+const register = new Registry();
+collectDefaultMetrics({ register });
+
+// Custom metrics
+const httpRequestCounter = new promClient.Counter({
+  name: "http_requests_total",
+  help: "Total number of HTTP requests",
+  labelNames: ["method", "route", "status"],
+});
+
+const httpRequestDuration = new promClient.Histogram({
+  name: "http_request_duration_seconds",
+  help: "Duration of HTTP requests in seconds",
+  labelNames: ["method", "route", "status"],
+  buckets: [0.1, 0.3, 0.5, 1, 2, 5], // Buckets for response time
+});
+
+// Middleware to track request metrics
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on("finish", () => {
+    const duration = (Date.now() - start) / 1000; // Convert to seconds
+    httpRequestCounter.inc({
+      method: req.method,
+      route: req.path,
+      status: res.statusCode,
+    });
+    httpRequestDuration.observe(
+      {
+        method: req.method,
+        route: req.path,
+        status: res.statusCode,
+      },
+      duration
+    );
+  });
+  next();
+});
 
 // Enable CORS for all routes
 app.use(
@@ -30,13 +74,11 @@ app.use("/api/users", userRoutes);
 app.use("/api/food-items", foodItemRoutes);
 app.use("/api/password", passwordResetRoutes);
 
-// const pool = new Pool({
-//   user: process.env.DB_USER,
-//   host: process.env.DB_HOST,
-//   database: process.env.DB_NAME,
-//   password: process.env.DB_PASSWORD,
-//   port: process.env.DB_PORT,
-// });
+// Expose metrics endpoint for Prometheus
+app.get("/metrics", async (req, res) => {
+  res.set("Content-Type", register.contentType);
+  res.end(await register.metrics());
+});
 async function startApi() {
   try {
     await connectDB();

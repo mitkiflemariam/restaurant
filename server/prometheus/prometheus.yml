@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s
+  # evaluation_interval: 15s
+
+# rule_files:
+#   - "alerts.yml" # We'll create this file for alerting rules
+
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets: ["alertmanager:9093"]
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+  - job_name: "node_app"
+    static_configs:
+      - targets: ["node_app:3000"] # Your Node.js app
