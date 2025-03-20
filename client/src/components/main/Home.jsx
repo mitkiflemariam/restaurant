@@ -50,7 +50,7 @@ const Home = () => {
   ];
 
   return (
-    <main className="flex flex-col w-full min-h-screen bg-white p-6">
+    <main className="flex flex-col w-full min-h-screen bg-white p-6 shadow-md">
       <section className="relative h-[40vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-10"></div>
         <div className="bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center absolute inset-0"></div>
@@ -83,7 +83,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-24 bg-white">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
