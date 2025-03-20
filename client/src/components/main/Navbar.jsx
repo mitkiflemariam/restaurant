@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { AuthContext } from "@/AuthContext";
-import { ShoppingBag } from "lucide-react";
-
+// import { ShoppingBag } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 const Navbar = () => {
   const { isLoggedIn, userName, role, logout } = useContext(AuthContext);
 
@@ -49,7 +50,12 @@ const Navbar = () => {
 
       <div className="flex items-center gap-6">
         <Link to="/order" className="relative" aria-label="Shopping Cart">
-          <ShoppingBag className="h-6 w-6 text-white" />
+          {/* <ShoppingBag className="h-6 w-6 text-white" /> */}
+          <FontAwesomeIcon
+            icon={faShoppingCart}
+            style={{ color: "yellow" }}
+            size="2x"
+          />
           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
             0
           </span>
