@@ -9,7 +9,9 @@ router.post("/", async (req, res) => {
 
     // Validate required fields
     if (!name || !price || !category) {
-      return res.status(400).json({ error: "Missing required fields: name, price, category" });
+      return res
+        .status(400)
+        .json({ error: "Missing required fields: name, price, category" });
     }
 
     const foodItem = new FoodItem(req.body);
@@ -29,6 +31,15 @@ router.get("/:id", async (req, res) => {
     res.json(foodItem);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const foodItems = await FoodItem.find();
+    res.json(foodItems);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
   }
 });
 
