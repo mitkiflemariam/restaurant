@@ -53,7 +53,7 @@ const Navbar = () => {
           {/* <ShoppingBag className="h-6 w-6 text-white" /> */}
           <FontAwesomeIcon
             icon={faShoppingCart}
-            style={{ color: "yellow" }}
+            style={{ color: "orange" }}
             size="2x"
           />
           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
