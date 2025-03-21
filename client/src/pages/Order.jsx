@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Order = () => {
   const [cart, setCart] = useState([]);
@@ -209,7 +211,8 @@ const Order = () => {
 
         {/* Order Status */}
         <div className="md:col-span-1">
-          <Card className="sticky top-4">
+          {/* <Card className="sticky top-4"> */}
+          <Card className="fixed top-19">
             <CardHeader>
               <CardTitle>Your Order</CardTitle>
               <CardDescription>
@@ -228,15 +231,18 @@ const Order = () => {
                     >
                       <div className="flex items-center gap-2">
                         <span>{item.name}</span>
+                      </div>
+                      <span>
+                        ${item.price.toFixed(2)}
                         <button
                           onClick={() => removeFromCart(index)}
                           className="ml-2 text-red-500 hover:text-red-700 text-xs bg-red-100 hover:bg-red-200 px-[0.3em] rounded-sm"
                           aria-label="Remove item"
                         >
-                          ✕
+                         {/* <i class="fa fa-trash-o" style="font-size:48px;color:red"></i> */}
+                         <FontAwesomeIcon icon={faTrash} className="text-red-500 cursor-pointer" />
                         </button>
-                      </div>
-                      <span>${item.price.toFixed(2)}</span>
+                      </span>
                     </div>
                   ))}
                   <div className="border-t pt-4 mt-4">
