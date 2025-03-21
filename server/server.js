@@ -4,6 +4,8 @@ const connectDB = require("./db");
 const userRoutes = require("./routers/userrouter");
 const foodItemRoutes = require("./routers/foodItemRoutes");
 const passwordResetRoutes = require("./routers/passwordResetRoutes");
+const orderRoutes = require("./routers/orderRoutes");
+const restaurantRoutes = require('./routers/restaurantRoutes');
 const dotenv = require("dotenv");
 const cors = require("cors");
 const { Pool } = require("pg");
@@ -29,7 +31,8 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/food-items", foodItemRoutes);
 app.use("/api/password", passwordResetRoutes);
-
+app.use('/api', orderRoutes);
+app.use('/api/restaurants', restaurantRoutes);
 // const pool = new Pool({
 //   user: process.env.DB_USER,
 //   host: process.env.DB_HOST,
