@@ -5,8 +5,8 @@ import RestaurantTab from "./RestaurantTab";
 // const AdminDashboard = (role) => {
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("customers");
-  const [customers, setCustomers] = useState([]);
-  const [restaurants, setRestaurants] = useState([]);
+  // const [customers, setCustomers] = useState([]);
+  // const [restaurants, setRestaurants] = useState([]);
 
   useEffect(() => {
     // Fetch customers
@@ -47,7 +47,8 @@ const AdminDashboard = () => {
       <div>
         {activeTab === "customers" && (
           // <CustomerTab customers={customers} role={role} />
-          <CustomerTab customers={customers} />
+          // <CustomerTab customers={customers} />
+          <CustomerTab />
         )}
         {activeTab === "restaurants" && (
           // <RestaurantTab restaurants={restaurants} role={role} />
