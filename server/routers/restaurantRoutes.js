@@ -41,4 +41,70 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Update a restaurant
+router.put("/:id", async (req, res) => {
+  try {
+    const { name, location } = req.body;
+
+    // Basic validation
+    if (!name && !location) {
+      return res.status(400).json({
+        message: "At least one field (name or location) is required to update",
+      });
+    }
+
+    const restaurant = await Restaurant.findByIdAndUpdate(
+      req.params.id,
+      {
+        ...(name && { name }), // Only include fields that are provided
+        ...(location && { location }),
+      },
+      {
+        new: true, // Return the updated document
+        runValidators: true, // Run schema validators on update
+      }
+    );
+
+    if (!restaurant) {
+      return res.status(404).json({
+        message: "Restaurant not found",
+      });
+    }
+
+    res.json(restaurant);
+  } catch (error) {
+    if (error.name === "CastError") {
+      return res.status(400).json({
+        message: "Invalid restaurant ID",
+      });
+    }
+    res.status(500).json({
+      message: "Error updating restaurant",
+      error: error.message,
+    });
+  }
+});
+
+// Delete a restaurant
+router.delete("/:id", async (req, res) => {
+  // console.log("id: " + id);
+  try {
+    const restaurant = await Restaurant.findByIdAndDelete(req.params.id);
+    console.log("restaurant: " + restaurant);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
+    res.status(204).send(); // No content response for successful delete
+  } catch (error) {
+    if (error.name === "CastError") {
+      return res.status(400).json({ message: "Invalid restaurant ID" });
+    }
+    res.status(500).json({
+      message: "Error deleting restaurant",
+      error: error.message,
+    });
+  }
+});
+
 module.exports = router;
