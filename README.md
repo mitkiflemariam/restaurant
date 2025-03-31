@@ -6,16 +6,18 @@ A full-stack web application for managing restaurants where customers can order 
 
 - Admin dashboard for managing menu items and users
 - User authentication and account management
-- Order processing and tracking
 
 ## Technology Stack
 
-- **Frontend**: 
+- **Frontend**:
+
   - React
   - Tailwind CSS
   - Vite
+  - ShadCN/UI
 
-- **Backend**: 
+- **Backend**:
+
   - Node.js
   - Express
   - MongoDB
@@ -23,6 +25,7 @@ A full-stack web application for managing restaurants where customers can order 
   - JWT Authentication
 
 - **DevOps**:
+
   - Docker
   - Docker Compose
 
@@ -71,7 +74,7 @@ JWT_SECRET=<your-jwt-secret>
 ```
 # Start the server
 cd server
-npm run dev
+npm start
 
 # Start the client
 cd ../client
