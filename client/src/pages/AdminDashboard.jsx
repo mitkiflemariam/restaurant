@@ -51,7 +51,8 @@ const AdminDashboard = () => {
         )}
         {activeTab === "restaurants" && (
           // <RestaurantTab restaurants={restaurants} role={role} />
-          <RestaurantTab restaurants={restaurants} />
+          // <RestaurantTab restaurants={restaurants} />
+          <RestaurantTab />
         )}
       </div>
     </div>
