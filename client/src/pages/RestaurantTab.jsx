@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 // function RestaurantTab({ restaurants, role }) {
 function RestaurantTab({ restaurants: initialRestaurants }) {
   // State to manage the list of restaurants
@@ -160,5 +161,15 @@ function RestaurantTab({ restaurants: initialRestaurants }) {
     </div>
   );
 }
-
+// PropTypes validation
+RestaurantTab.propTypes = {
+  restaurants: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      location: PropTypes.string.isRequired,
+      rating: PropTypes.number, // Rating is optional in the table but required in the form
+    })
+  ).isRequired,
+};
 export default RestaurantTab;
