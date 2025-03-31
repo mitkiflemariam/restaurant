@@ -2,10 +2,51 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { AuthContext } from "@/AuthContext";
-import { ShoppingBag } from "lucide-react";
+// import { ShoppingBag } from "lucide-react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { ShoppingCart } from "lucide-react";
 
 const Navbar = () => {
   const { isLoggedIn, userName, role, logout } = useContext(AuthContext);
+  const [cartTotal, setCartTotal] = useState("0");
+  const [cartItemCount, setCartItemCount] = useState(0);
+
+  useEffect(() => {
+    // Function to update cart data from Order page state
+    const updateCartData = () => {
+      const handler = setInterval(() => {
+        const orderState = localStorage.getItem("orderCart");
+        if (orderState) {
+          try {
+            const cart = JSON.parse(orderState);
+            if (Array.isArray(cart) && cart.length > 0) {
+              // Set item count
+              setCartItemCount(cart.length);
+
+              // Calculate total price
+              let total = 0;
+              cart.forEach((item) => {
+                total += Number(item.price);
+              });
+              setCartTotal(total.toFixed(2));
+            } else {
+              setCartItemCount(0);
+              setCartTotal("0");
+            }
+          } catch (e) {
+            setCartItemCount(0);
+            setCartTotal("0");
+          }
+        }
+      }, 1000);
+
+      return () => clearInterval(handler);
+    };
+
+    const cleanup = updateCartData();
+    return cleanup;
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -20,12 +61,6 @@ const Navbar = () => {
       </div>
 
       <div className="flex space-x-8">
-        {role === "admin" && (
-          <Link to="/admin" aria-label="Admin Dashboard">
-            Admin Dashboard
-          </Link>
-        )}
-
         {/* <Link to="/customer" aria-label="Customer Dashboard">
           Customer Dashboard
         </Link> */}
@@ -38,21 +73,45 @@ const Navbar = () => {
           Home
         </Link>
 
-        <Link to="/confirmation" aria-label="confirmation">
+        {/* <Link to="/confirmation" aria-label="confirmation">
           Confirmation
-        </Link>
+        </Link> */}
 
         <Link to="/order" aria-label="order">
           Order
         </Link>
+
+        {role === "admin" && (
+          <Link to="/admin" aria-label="Admin Dashboard">
+            Admin Dashboard
+          </Link>
+        )}
       </div>
 
       <div className="flex items-center gap-6">
-        <Link to="/order" className="relative" aria-label="Shopping Cart">
-          <ShoppingBag className="h-6 w-6 text-white" />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-            0
-          </span>
+        <Link
+          to="/order"
+          className="relative flex items-center group hover:bg-gray-800 px-3 py-1.5 rounded-lg transition-colors"
+          aria-label="Shopping Cart"
+        >
+          <div className="relative">
+            <ShoppingCart className="h-6 w-6 text-orange-500 group-hover:text-orange-400 transition-colors" />
+            {cartItemCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-medium rounded-full min-h-5 min-w-5 px-1 flex items-center justify-center shadow-sm">
+                {cartItemCount}
+              </span>
+            )}
+          </div>
+          <div className="ml-2 flex flex-col">
+            <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
+              Cart
+            </span>
+            {cartTotal !== "0" && (
+              <span className="text-xs text-orange-400 group-hover:text-orange-300 transition-colors">
+                ${parseFloat(cartTotal).toFixed(2)}
+              </span>
+            )}
+          </div>
         </Link>
         {isLoggedIn ? (
           <div className="flex space-x-8">

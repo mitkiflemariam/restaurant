@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Card,
   CardContent,
@@ -18,10 +19,33 @@ import {
 import Order from "@/pages/Order";
 import { Link } from "react-router-dom";
 
+// Helper function to get appropriate food images if no image is provided
+const getDefaultFoodImage = (category, name) => {
+  // Convert to lowercase for easier matching
+  const itemCategory = (category || "").toLowerCase();
+  const itemName = (name || "").toLowerCase();
+
+  if (itemName.includes("salmon")) {
+    return "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2FsbW9ufGVufDB8fDB8fHww";
+  }
+
+  if (itemName.includes("steak")) {
+    return "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3RlYWt8ZW58MHx8MHx8fDA%3D";
+  }
+
+  if (itemName.includes("pasta") || itemName.includes("tagliatelle")) {
+    return "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHBhc3RhfGVufDB8fDB8fHww";
+  }
+
+  // Default food image for any other items
+  return "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8fA%3D%3D";
+};
+
 const Home = () => {
+  // Featured dishes shown directly without API call
   const featuredDishes = [
     {
-      id: 1,
+      _id: 1,
       name: "Pan-Seared Salmon",
       description:
         "Wild-caught salmon fillet with lemon herb butter, served with seasonal vegetables",
@@ -30,7 +54,7 @@ const Home = () => {
         "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop",
     },
     {
-      id: 2,
+      _id: 2,
       name: "Prime Ribeye Steak",
       description:
         "28-day aged ribeye with truffle mashed potatoes and red wine reduction",
@@ -39,7 +63,7 @@ const Home = () => {
         "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop",
     },
     {
-      id: 3,
+      _id: 3,
       name: "Truffle Tagliatelle",
       description:
         "House-made pasta with black truffle cream sauce and aged parmesan",
@@ -83,11 +107,12 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Featured Dishes Section */}
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
-              Signature Dishes
+              Featured Dishes
             </h2>
             <div className="w-20 bg-black h-1 mb-6"></div>
             <p className="text-gray-600 text-center max-w-2xl">
@@ -99,7 +124,7 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredDishes.map((dish) => (
               <Card
-                key={dish.id}
+                key={dish._id}
                 className="overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="h-64 overflow-hidden">
@@ -117,9 +142,11 @@ const Home = () => {
                   <p className="font-bold mt-4 text-lg">${dish.price}</p>
                 </CardContent>
                 <CardFooter>
-                  <Button className="text-white px-10 py-6 w-full rounded-md font-medium">
-                    Add to Order
-                  </Button>
+                  <Link to="/order" className="w-full">
+                    <Button className="text-white px-10 py-6 w-full rounded-md font-medium">
+                      Add to Order
+                    </Button>
+                  </Link>
                 </CardFooter>
               </Card>
             ))}
