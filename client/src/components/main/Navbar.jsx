@@ -89,30 +89,32 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-6">
-        <Link
-          to="/order"
-          className="relative flex items-center group hover:bg-gray-800 px-3 py-1.5 rounded-lg transition-colors"
-          aria-label="Shopping Cart"
-        >
-          <div className="relative">
-            <ShoppingCart className="h-6 w-6 text-orange-500 group-hover:text-orange-400 transition-colors" />
-            {cartItemCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-medium rounded-full min-h-5 min-w-5 px-1 flex items-center justify-center shadow-sm">
-                {cartItemCount}
+        {role === "customer" && (
+          <Link
+            to="/order"
+            className="relative flex items-center group hover:bg-gray-800 px-3 py-1.5 rounded-lg transition-colors"
+            aria-label="Shopping Cart"
+          >
+            <div className="relative">
+              <ShoppingCart className="h-6 w-6 text-orange-500 group-hover:text-orange-400 transition-colors" />
+              {cartItemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-medium rounded-full min-h-5 min-w-5 px-1 flex items-center justify-center shadow-sm">
+                  {cartItemCount}
+                </span>
+              )}
+            </div>
+            <div className="ml-2 flex flex-col">
+              <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
+                Cart
               </span>
-            )}
-          </div>
-          <div className="ml-2 flex flex-col">
-            <span className="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">
-              Cart
-            </span>
-            {cartTotal !== "0" && (
-              <span className="text-xs text-orange-400 group-hover:text-orange-300 transition-colors">
-                ${parseFloat(cartTotal).toFixed(2)}
-              </span>
-            )}
-          </div>
-        </Link>
+              {cartTotal !== "0" && (
+                <span className="text-xs text-orange-400 group-hover:text-orange-300 transition-colors">
+                  ${parseFloat(cartTotal).toFixed(2)}
+                </span>
+              )}
+            </div>
+          </Link>
+        )}
         {isLoggedIn ? (
           <div className="flex space-x-8">
             <p>Welcome, {userName || "User"}!</p>
