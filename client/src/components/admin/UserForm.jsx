@@ -21,7 +21,7 @@ const UserForm = ({ isOpen, onClose, user, onSubmit, mode }) => {
   const [lastname, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("customer");
   const [password, setPassword] = useState("");
   
   // State for validation errors
@@ -42,7 +42,7 @@ const UserForm = ({ isOpen, onClose, user, onSubmit, mode }) => {
       setLastname(user.lastname || "");
       setUsername(user.username || "");
       setEmail(user.email || "");
-      setRole(user.role || "user");
+      setRole(user.role || "customer");
       setPassword(""); // Don't populate password for security
     } else {
       // Reset form for new users
@@ -50,7 +50,7 @@ const UserForm = ({ isOpen, onClose, user, onSubmit, mode }) => {
       setLastname("");
       setUsername("");
       setEmail("");
-      setRole("user");
+      setRole("customer");
       setPassword("");
     }
     
@@ -263,7 +263,8 @@ const UserForm = ({ isOpen, onClose, user, onSubmit, mode }) => {
                     <SelectValue placeholder="Select user role" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="user">User</SelectItem>
+                    <SelectItem value="customer">Customer</SelectItem>
+                    <SelectItem value="owner">Restaurant Owner</SelectItem>
                     <SelectItem value="admin">Admin</SelectItem>
                   </SelectContent>
                 </Select>
