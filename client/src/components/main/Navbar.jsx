@@ -6,6 +6,7 @@ import { AuthContext } from "@/AuthContext";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { ShoppingCart } from "lucide-react";
+import Profile from "./Profile";
 
 const Navbar = () => {
   const { isLoggedIn, userName, role, logout } = useContext(AuthContext);
@@ -51,6 +52,23 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
   };
+
+  // Derive initials from userName (e.g., "John Doe" -> "JD")
+  const getInitials = (name) => {
+    if (!name) return "UN";
+    const nameParts = name.split(" ");
+    return nameParts.length > 1
+      ? `${nameParts[0][0]}${nameParts[1][0]}`.toUpperCase()
+      : name.slice(0, 2).toUpperCase();
+  };
+
+  // User object for Profile component
+  const user = {
+    imageUrl: null, // Replace with actual image URL if available in AuthContext
+    name: userName,
+    initials: getInitials(userName),
+  };
+
   return (
     <nav className="fixed z-50 w-full flex bg-[#171717] text-white justify-between items-center px-8 py-4">
       {/* <nav className="fixed top-0 left-0 w-full bg-black text-white z-50 flex justify-between items-center py-4 px-8 shadow-md"> */}
@@ -118,6 +136,7 @@ const Navbar = () => {
         {isLoggedIn ? (
           <div className="flex space-x-8">
             <p>Welcome, {userName || "User"}!</p>
+            <Profile user={user} /> {/* Add Profile component */}
             <button onClick={handleLogout}>Logout</button>
           </div>
         ) : (
