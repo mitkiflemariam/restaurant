@@ -136,7 +136,7 @@ const Navbar = () => {
         {isLoggedIn ? (
           <div className="flex space-x-8">
             <p>Welcome, {userName || "User"}!</p>
-            <Profile user={user} /> {/* Add Profile component */}
+            <Profile user={user} />
             <button onClick={handleLogout}>Logout</button>
           </div>
         ) : (
