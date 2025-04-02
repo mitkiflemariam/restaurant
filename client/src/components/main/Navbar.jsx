@@ -134,7 +134,7 @@ const Navbar = () => {
           </Link>
         )}
         {isLoggedIn ? (
-          <div className="flex space-x-8">
+          <div className="flex space-x-8  items-center">
             <p>Welcome, {userName || "User"}!</p>
             <Profile user={user} />
             <button onClick={handleLogout}>Logout</button>

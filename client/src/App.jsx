@@ -15,8 +15,8 @@ import Confirmation from "./pages/Confirmation";
 import Order from "./pages/Order";
 import Login from "./components/main/Signin";
 import SignUp from "./components/main/Signup";
-import ResetPassword from "./components/main/ResetPassword";
 import RequestReset from "./components/main/RequestReset";
+import ResetPassword from "./components/main/Resetpassword";
 
 // import swaggerDocs from "@/lib/swagger";
 
