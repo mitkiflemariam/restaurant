@@ -41,13 +41,13 @@ jobs:
       #       echo "No package.json found, skipping tests."
       #     fi
 
-      - name: Build Docker Image
-        run: |
-          docker build -t myapp:latest .
+      # - name: Build Docker Image
+      #   run: |
+      #     docker build -t myapp:latest .
 
-      - name: Run Docker Container
-        run: |
-          docker run -d -p 3000:3000 --name myapp-container myapp:latest
+      # - name: Run Docker Container
+      #   run: |
+      #     docker run -d -p 3000:3000 --name myapp-container myapp:latest
 
     #   - name: Deployment Step (Modify as needed)
     #     run: echo "Add your deployment script here"
