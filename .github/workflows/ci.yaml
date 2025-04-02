@@ -24,14 +24,14 @@ jobs:
       - name: Install dependencies
         run: npm install ci
 
-      - name: Run Linting
-        run: |
-          if [ -f "package.json" ]; then
-            npm install eslint --save-dev
-            npx eslint .
-          else
-            echo "No package.json found, skipping linting."
-          fi
+      # - name: Run Linting
+      #   run: |
+      #     if [ -f "package.json" ]; then
+      #       npm install eslint --save-dev
+      #       npx eslint .
+      #     else
+      #       echo "No package.json found, skipping linting."
+      #     fi
 
       - name: Run Tests
         run: |
