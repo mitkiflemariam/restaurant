@@ -36,7 +36,7 @@ jobs:
           curl -Ls https://cli.doppler.com/install.sh | sh
 
       - name: Authenticate Doppler
-        run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
+        run: doppler login --token ${secrets.DOPPLER_TOKEN}
 
       - name: Install Dependencies
         run: |
