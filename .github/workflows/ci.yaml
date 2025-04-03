@@ -52,27 +52,62 @@ jobs:
           cd backend
           npm run build
 
-  frontend:
-    name: Frontend - Build & Test
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: client  # Set the default working directory to 'client'
+frontend:
+  name: Frontend - Build & Test
+  runs-on: ubuntu-latest
+  defaults:
+    run:
+      working-directory: client  # Set the default working directory to 'client'
 
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+  steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      - name: Set Up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+    - name: Set Up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
 
-      - name: Install Dependencies
-        run: npm install
+    - name: Install Dependencies
+      run: npm install
 
-      - name: Run Tests
-        run: npm test
+    - name: Start Dev Server
+      run: npm run dev &
+      # The '&' runs the command in the background so the pipeline can proceed
 
-      - name: Build Frontend
-        run: npm run build
+    - name: Wait for Dev Server to Start
+      run: |
+        sleep 10  # Wait for 10 seconds to ensure the server is up
+        curl --retry 5 --retry-delay 5 http://localhost:3000 || exit 1
+      # This checks if the dev server is running (adjust the port if needed)
+
+    - name: Run Tests
+      run: npm test
+      # If your tests need the dev server (e.g., E2E tests), they can run here
+
+    - name: Build Frontend
+      run: npm run build
+      # Build the production bundle (this doesn't need the dev server)
+    # name: Frontend - Build & Test
+    # runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: client  # Set the default working directory to 'client'
+
+    # steps:
+    #   - name: Checkout Code
+    #     uses: actions/checkout@v3
+
+    #   - name: Set Up Node.js
+    #     uses: actions/setup-node@v3
+    #     with:
+    #       node-version: 18
+
+    #   - name: Install Dependencies
+    #     run: npm install
+
+    #   - name: Run Tests
+    #     run: npm test
+
+    #   - name: Build Frontend
+    #     run: npm run build
