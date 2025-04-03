@@ -30,20 +30,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Doppler CLI
-        run: |
-          # Download a specific version of the Doppler CLI binary
-          curl -Ls https://github.com/DopplerHQ/cli/releases/download/3.68.0/doppler-linux-amd64.tar.gz -o doppler.tar.gz
-          # Extract the binary
-          tar -xzf doppler.tar.gz
-          # Move the binary to a directory in the PATH
-          mkdir -p ~/.local/bin
-          mv doppler ~/.local/bin/
-          # Add ~/.local/bin to the PATH
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Authenticate Doppler
-        run: doppler login --token ${secrets.DOPPLER_TOKEN}
+      - name: Install Doppler CLI and Authenticate
+        uses: dopplerhq/cli-action@v2
+        with:
+          token: ${{ secrets.DOPPLER_TOKEN }}
 
       - name: Install Dependencies
         run: |
