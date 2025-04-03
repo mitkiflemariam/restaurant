@@ -45,6 +45,8 @@ jobs:
         run: npm install
 
       - name: Run Tests
+        env:
+          OPPLER_TOKEN: dp.ct…XxfS4b
         run: doppler run -- npm test
 
       - name: Build Backend
