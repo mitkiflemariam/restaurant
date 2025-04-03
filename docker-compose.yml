@@ -1,24 +1,24 @@
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
     build: ./backend
     ports:
-      - "5000:5000"
+      - "3000:3000"
     depends_on:
       - mongo
     networks:
       - app_network
-    command: doppler run -- npm start  # Use Doppler to inject secrets
+    command: doppler run -- npm start # Use Doppler to inject secrets
     environment:
-      - DOPPLER_TOKEN=${DOPPLER_TOKEN}  # Ensure Doppler authentication
+      - DOPPLER_TOKEN=${DOPPLER_TOKEN} # Ensure Doppler authentication
     volumes:
-      - ~/.doppler:/root/.doppler  # Mount Doppler credentials
+      - ~/.doppler:/root/.doppler # Mount Doppler credentials
 
   frontend:
     build: ./frontend
     ports:
-      - "3000:80"
+      - "5173:5173"
     depends_on:
       - backend
     networks:
