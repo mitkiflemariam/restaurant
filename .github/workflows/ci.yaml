@@ -32,7 +32,16 @@ jobs:
 
       - name: Install Doppler CLI
         run: |
-          curl -Ls https://cli.doppler.com/install.sh | sh
+          # curl -Ls https://cli.doppler.com/install.sh | sh
+          # Download the Doppler CLI binary directly
+          curl -Ls https://github.com/DopplerHQ/cli/releases/latest/download/doppler-linux-amd64.tar.gz -o doppler.tar.gz
+          # Extract the binary
+          tar -xzf doppler.tar.gz
+          # Move the binary to a directory in the PATH
+          mkdir -p ~/.local/bin
+          mv doppler ~/.local/bin/
+          # Add ~/.local/bin to the PATH
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Authenticate Doppler
         run: doppler login --token ${secrets.DOPPLER_TOKEN}
