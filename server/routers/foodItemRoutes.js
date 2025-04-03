@@ -25,7 +25,8 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const { name, price, category, restaurantId, description } = req.body;
+    const { name, description, price, category, restaurantId, image } =
+      req.body;
 
     // Log incoming data for debugging (optional, remove in production)
     console.log({ name, price, category, restaurantId, description });
@@ -50,6 +51,7 @@ router.post("/", async (req, res) => {
       category,
       restaurant: restaurantId,
       description: description || "", // Default to empty string if not provided
+      image,
     });
 
     // Save the food item

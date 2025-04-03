@@ -1,53 +1,141 @@
-name: CI Pipeline
+
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
       - main
+      - develop
   pull_request:
     branches:
       - main
+      - develop
 
 jobs:
-  build:
+  backend:
+    name: Backend - Build & Test
     runs-on: ubuntu-latest
 
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set Up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install ci
+      - name: Install Doppler CLI
+        run: |
+          curl -Ls https://cli.doppler.com/install.sh | sh
 
-      # - name: Run Linting
-      #   run: |
-      #     if [ -f "package.json" ]; then
-      #       npm install eslint --save-dev
-      #       npx eslint .
-      #     else
-      #       echo "No package.json found, skipping linting."
-      #     fi
+      - name: Authenticate Doppler
+        run: doppler login --token ${{ secrets.DOPPLER_TOKEN }}
 
-      # - name: Run Tests
-      #   run: |
-      #     if [ -f "package.json" ]; then
-      #       npm test
-      #     else
-      #       echo "No package.json found, skipping tests."
-      #     fi
+      - name: Install Dependencies
+        run: |
+          cd backend
+          npm install
 
-      # - name: Build Docker Image
-      #   run: |
-      #     docker build -t myapp:latest .
+      - name: Run Tests
+        run: |
+          cd backend
+          doppler run -- npm test
 
-      # - name: Run Docker Container
-      #   run: |
-      #     docker run -d -p 3000:3000 --name myapp-container myapp:latest
+      - name: Build Backend
+        run: |
+          cd backend
+          npm run build
 
-    #   - name: Deployment Step (Modify as needed)
-    #     run: echo "Add your deployment script here"
+  frontend:
+    name: Frontend - Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run Tests
+        run: |
+          cd frontend
+          npm test
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
+
+
+
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install dependencies
+#         run: npm install ci
+
+#       # - name: Run Linting
+#       #   run: |
+#       #     if [ -f "package.json" ]; then
+#       #       npm install eslint --save-dev
+#       #       npx eslint .
+#       #     else
+#       #       echo "No package.json found, skipping linting."
+#       #     fi
+
+#       # - name: Run Tests
+#       #   run: |
+#       #     if [ -f "package.json" ]; then
+#       #       npm test
+#       #     else
+#       #       echo "No package.json found, skipping tests."
+#       #     fi
+
+#       # - name: Build Docker Image
+#       #   run: |
+#       #     docker build -t myapp:latest .
+
+#       # - name: Run Docker Container
+#       #   run: |
+#       #     docker run -d -p 3000:3000 --name myapp-container myapp:latest
+
+#     #   - name: Deployment Step (Modify as needed)
+#     #     run: echo "Add your deployment script here"
+
+
+
