@@ -6,12 +6,12 @@ function Profile({ user }) {
   const defaultImageUrl = "https://github.com/shadcn.png";
 
   return (
-    <Avatar className="h-16 w-16">
-      <AvatarImage
+    <Avatar className="h-12 w-12">
+      {/* <AvatarImage
         src={user.imageUrl || defaultImageUrl} // Use default if imageUrl is falsy
         alt={user.name || "User"} // Fallback for alt text
-      />
-      <AvatarFallback>{user.initials || "UN"}</AvatarFallback>{" "}
+      /> */}
+      <AvatarFallback>{user.imageUrl || user.initials}</AvatarFallback>{" "}
       {/* Fallback initials */}
     </Avatar>
   );
