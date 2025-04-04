@@ -36,18 +36,18 @@ jobs:
       - name: Install Doppler CLI and Authenticate
         uses: dopplerhq/cli-action@v2
         with:
-          # token: dp.ct…XxfS4b
+          
           token: ${secrets.DOPPLER_TOKEN}
 
       - name: Install Dependencies
         env:
-          # DOPPLER_TOKEN: dp.ct…XxfS4b
+          
           token: ${secrets.DOPPLER_TOKEN}
         run: npm install
 
       - name: Run Tests
         env:
-          # OPPLER_TOKEN: dp.ct…XxfS4b
+          
           token: ${secrets.DOPPLER_TOKEN}
         run: doppler run -- npm test
 
