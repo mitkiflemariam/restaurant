@@ -153,7 +153,7 @@ const Order = () => {
                             alt={item.name}
                             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                             onError={(e) => {
-                              e.target.src = getDefaultFoodImage();
+                              e.target.src = getDefaultFoodImage();//ioe0928957821
                             }}
                           />
                         </div>
