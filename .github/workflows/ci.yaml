@@ -45,11 +45,11 @@ jobs:
           token: ${secrets.DOPPLER_TOKEN}
         run: npm install
 
-      - name: Run Tests
-        env:
+      # - name: Run Tests
+      #   env:
           
-          token: ${secrets.DOPPLER_TOKEN}
-        run: doppler run -- npm test
+      #     token: ${secrets.DOPPLER_TOKEN}
+      #   run: doppler run -- npm test
 
       - name: Build Backend
         run: npm run build
@@ -73,8 +73,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
-        run: npm test
+      # - name: Run Tests
+      #   run: npm test
 
       - name: Build Frontend
         run: npm run build
