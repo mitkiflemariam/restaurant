@@ -70,7 +70,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed z-50 w-full flex bg-[#171717] text-white justify-between items-center px-8 py-4">
+    <nav className="flex bg-[#171717] text-white justify-between items-center px-8 py-4">
       {/* <nav className="fixed top-0 left-0 w-full bg-black text-white z-50 flex justify-between items-center py-4 px-8 shadow-md"> */}
       <div className="text-2xl font-bold">
         <Link to="/" aria-label="Home">
