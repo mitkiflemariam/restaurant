@@ -7,6 +7,10 @@
     
     "test": "jest",
     "start": "node server.js",
+    "clean":"rm -rf dist",
+    "build":"npm run clean && npm run prepare",
+    "prepare":"echo 'no build needed '",
+
     "db.start": "docker-compose up -d",
     "db.stop": "docker compose stop",
     "db.restart": "docker-compose restart",
