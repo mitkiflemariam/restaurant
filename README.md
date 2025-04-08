@@ -2,6 +2,8 @@
 
 A full-stack web application for managing restaurants where customers can order and managers can review the food items and customers in the dashboard.
 
+![Project](https://github.com/mitkiflemariam/restaurant/blob/main/client/public/project.png?raw=true)
+
 ## Features
 
 - Admin dashboard for managing menu items and users
