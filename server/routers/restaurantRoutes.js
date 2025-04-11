@@ -15,9 +15,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+// router.get("/", async (req, res) => {
+//   try {
+//     const restaurants = await Restaurant.find().populate("orders foodItems");
+//     res.status(200).json(restaurants);
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error fetching restaurants", error: error.message });
+//   }
+// });
+
 router.get("/", async (req, res) => {
   try {
-    const restaurants = await Restaurant.find().populate("orders foodItems");
+    const userId = req.user.id; // Assuming you use JWT and middleware sets req.user
+    const restaurants = await Restaurant.find({ owner: userId }).populate("orders foodItems");
     res.status(200).json(restaurants);
   } catch (error) {
     res
