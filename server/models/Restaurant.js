@@ -10,6 +10,11 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    // required: true,
+  },
   foodItems: [
     {
       type: mongoose.Schema.Types.ObjectId,
