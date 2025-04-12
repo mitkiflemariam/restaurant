@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "@/AuthContext";
 // import { ShoppingBag } from "lucide-react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,32 +9,40 @@ import { ShoppingCart } from "lucide-react";
 import Profile from "./Profile";
 
 const Navbar = () => {
-  const { isLoggedIn, userName, role, logout } = useContext(AuthContext);
+  const { isLoggedIn, userName, role, ownerId, logout } =
+    useContext(AuthContext);
   const [cartTotal, setCartTotal] = useState("0");
   const [cartItemCount, setCartItemCount] = useState(0);
   const [restaurant, setRestaurant] = useState(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchRestaurant = async () => {
       if (role === "owner") {
         try {
-          const res = await fetch("/api/restaurants"); // Adjust if needed
+          const res = await fetch("http://localhost:3000/api/restaurants"); // Adjust if needed
+          console.log("the id is ...", ownerId);
           const data = await res.json();
-  
+
           // If user owns only one restaurant:
-          setRestaurant(data[0]);
-  
+          // setRestaurant(data[0]);
+          // setRestaurant(data);
+
           // If you want to filter based on owner ID, do it here if backend doesn't
           // Example:
-          // const myRestaurant = data.find(r => r.ownerId === currentUserId);
-          // setRestaurant(myRestaurant);
-  
+          if (Array.isArray(data)) {
+            const myRestaurant = data.find((r) => r.owner === ownerId);
+            console.log(myRestaurant);
+            setRestaurant(myRestaurant);
+            navigate("/restaurantdashboard");
+          } else {
+            console.error("Expected an array but got:", data);
+          }
         } catch (error) {
           console.error("Failed to fetch restaurant:", error);
         }
       }
     };
-  
+
     fetchRestaurant();
   }, [role]);
 
@@ -98,50 +106,58 @@ const Navbar = () => {
     <nav className="flex bg-[#171717] text-white justify-between items-center px-8 py-4">
       {/* <nav className="fixed top-0 left-0 w-full bg-black text-white z-50 flex justify-between items-center py-4 px-8 shadow-md"> */}
       <div className="text-2xl font-bold">
-  {role === "owner" ? (
-    <Link to={`/restaurant/${restaurant?._id}`} aria-label="Restaurant">
-    {restaurant?.logo ? (
-      <img src={restaurant.logo} alt={restaurant.name} className="h-10 w-auto" />
-    ) : (
-      restaurant?.name || "Restaurant"
-    )}
-  </Link>
-  ) : (
-    <Link to="/" aria-label="Home">
-      CCL EAT
-    </Link>
-  )}
-</div>
+        {role === "owner" ? (
+          // <Link to="#"{`/restaurant/${restaurant?._id}`} aria-label="Restaurant">
+          <Link to="/restaurantdashboard" aria-label="Restaurant">
+            {restaurant?.logo ? (
+              <img
+                src={restaurant.logo}
+                alt={restaurant.name}
+                className="h-10 w-auto"
+              />
+            ) : (
+              restaurant?.name || "Restaurant"
+              // getRestaurant()?.name || "Restaurant"
+            )}
+          </Link>
+        ) : (
+          <Link to="/" aria-label="Home">
+            CCL EAT
+          </Link>
+        )}
+      </div>
 
+      <div className="flex space-x-8">
+        {role === "owner" ? (
+          <>
+            <Link to="/restaurantdashboard" aria-label="home">
+              Home
+            </Link>
+            <Link
+              // to={`/restaurant/${restaurant?._id}/foods`}
+              to={"/restorantadmin"}
+              aria-label="Food Items"
+            >
+              Restaurant Dashboard
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/" aria-label="home">
+              Home
+            </Link>
+            <Link to="/order" aria-label="order">
+              Order
+            </Link>
 
-<div className="flex space-x-8">
-  <Link to="/" aria-label="home">
-    Home
-  </Link>
-
-  {role === "owner" ? (
-    <>
-      <Link to={`/restaurant/${restaurant?._id}/orders`} aria-label="Orders">
-        Orders
-      </Link>
-      <Link to={`/restaurant/${restaurant?._id}/foods`} aria-label="Food Items">
-        Food Items
-      </Link>
-    </>
-  ) : (
-    <>
-      <Link to="/order" aria-label="order">
-        Order
-      </Link>
-
-      {role === "admin" && (
-        <Link to="/admin" aria-label="Admin Dashboard">
-          Admin Dashboard
-        </Link>
-      )}
-    </>
-  )}
-</div>
+            {role === "admin" && (
+              <Link to="/admin" aria-label="Admin Dashboard">
+                Admin Dashboard
+              </Link>
+            )}
+          </>
+        )}
+      </div>
 
       <div className="flex items-center gap-6">
         {role === "customer" && (
@@ -171,27 +187,28 @@ const Navbar = () => {
           </Link>
         )}
         {isLoggedIn ? (
-  <div className="flex space-x-8 items-center">
-    <p>Welcome, {userName || "User"}!</p>
-    <Profile user={user} />
-    <button onClick={handleLogout}>Logout</button>
-  </div>
-) : role !== "owner" && (
-  <div className="flex gap-4">
-    <Button variant="ghost" className="w-24" asChild>
-      <Link to="/login" aria-label="login">
-        Sign in
-      </Link>
-    </Button>
+          <div className="flex space-x-8 items-center">
+            <p>Welcome, {userName || "User"}!</p>
+            <Profile user={user} />
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        ) : (
+          role !== "owner" && (
+            <div className="flex gap-4">
+              <Button variant="ghost" className="w-24" asChild>
+                <Link to="/login" aria-label="login">
+                  Sign in
+                </Link>
+              </Button>
 
-    <Button variant="ghost" className="w-24" asChild>
-      <Link to="/signup" aria-label="sign up">
-        Sign up
-      </Link>
-    </Button>
-  </div>
-)}
-
+              <Button variant="ghost" className="w-24" asChild>
+                <Link to="/signup" aria-label="sign up">
+                  Sign up
+                </Link>
+              </Button>
+            </div>
+          )
+        )}
       </div>
     </nav>
   );

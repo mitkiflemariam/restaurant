@@ -18,6 +18,7 @@ import SignUp from "./components/main/Signup";
 import RequestReset from "./components/main/RequestReset";
 import ResetPassword from "./components/main/Resetpassword";
 import RestaurantDashBoard from "./components/main/RestaurantDashbord";
+import RestAdminDashBoard from "./components/restaurant/RestAdminDashBoard";
 
 // import swaggerDocs from "@/lib/swagger";
 
@@ -30,7 +31,11 @@ function App({ children }) {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/restaurant" element={<RestaurantDashBoard />} />
+              <Route path="/restorantadmin" element={<RestAdminDashBoard />} />
+              <Route
+                path="/restaurantdashboard"
+                element={<RestaurantDashBoard />}
+              />
               <Route path="/customer" element={<CustomerDashboard />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/confirmation" element={<Confirmation />} />
