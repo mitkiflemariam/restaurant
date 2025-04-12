@@ -80,10 +80,10 @@ const Home = () => {
         <div className="bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center absolute inset-0"></div>
         <div className="container mx-auto px-4 relative z-20 text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-            Culinary Excellence
+            CCL EAT
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto font-light">
-            Experience authentic cuisine with a modern twist
+            Register your Restaurants and Hotels and maximize your profit
           </p>
           <Dialog>
             <Link to="/order" aria-label="order" className="w-full">
@@ -112,7 +112,7 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center">
-              Featured Dishes
+              Registered Restaurants and Hotels
             </h2>
             <div className="w-20 bg-black h-1 mb-6"></div>
             <p className="text-gray-600 text-center max-w-2xl">

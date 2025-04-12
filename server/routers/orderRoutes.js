@@ -5,30 +5,30 @@ const Order = require("../models/Order");
 const FoodItem = require("../models/fooditem");
 
 // Create a new restaurant
-router.post("/restaurants", async (req, res) => {
-  try {
-    const { name, location } = req.body;
-    const restaurant = new Restaurant({ name, location });
-    await restaurant.save();
-    res.status(201).json(restaurant);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error creating restaurant", error: error.message });
-  }
-});
+// router.post("/restaurants", async (req, res) => {
+//   try {
+//     const { name, location } = req.body;
+//     const restaurant = new Restaurant({ name, location });
+//     await restaurant.save();
+//     res.status(201).json(restaurant);
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error creating restaurant", error: error.message });
+//   }
+// });
 
 // Get all restaurants
-router.get("/restaurants", async (req, res) => {
-  try {
-    const restaurants = await Restaurant.find().populate("orders");
-    res.status(200).json(restaurants);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching restaurants", error: error.message });
-  }
-});
+// router.get("/restaurants", async (req, res) => {
+//   try {
+//     const restaurants = await Restaurant.find().populate("orders");
+//     res.status(200).json(restaurants);
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error fetching restaurants", error: error.message });
+//   }
+// });
 
 // Create a new order for a restaurant
 // router.post('/orders', async (req, res) => {

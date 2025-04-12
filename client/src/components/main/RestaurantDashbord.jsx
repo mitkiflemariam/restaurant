@@ -80,10 +80,12 @@ const RestaurantDashBoard = () => {
         <div className="bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center absolute inset-0"></div>
         <div className="container mx-auto px-4 relative z-20 text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-            {RestaurantDashBoard.name} || Restaurant Name
+            {/* {restaurant.name} || Restaurant Name */}
+            Restaurant Name
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto font-light">
-            {RestaurantDashBoard.description} || Restaurant description
+            {/* {restaurant.description} || Restaurant description */}
+             Restaurant description
           </p>
           <Dialog>
             <Link to="/order" aria-label="order" className="w-full">

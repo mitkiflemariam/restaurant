@@ -9,10 +9,6 @@ router.post("/", async (req, res) => {
   try {
     const { name, location, owner } = req.body;
 
-    // Log input
-    console.log("req.body:", req.body);
-    console.log("owner:", owner);
-
     // Validate owner
     if (!owner) {
       return res.status(400).json({ message: "Owner is required" });
@@ -23,7 +19,7 @@ router.post("/", async (req, res) => {
 
     // Check if the owner exists and has the correct role
     const existingOwner = await User.findById(owner);
-    console.log("existingOwner:", existingOwner);
+
     if (!existingOwner || existingOwner.role !== "owner") {
       return res.status(400).json({ message: "Invalid owner ID or role" });
     }
@@ -33,7 +29,6 @@ router.post("/", async (req, res) => {
 
     // Debug saved document
     const savedRestaurant = await Restaurant.findById(restaurant._id);
-    console.log("Saved restaurant:", savedRestaurant.toObject());
 
     // Ensure owner is included
     res.status(201).json(restaurant.toObject()); // Use toObject to bypass transforms
@@ -58,15 +53,53 @@ router.post("/", async (req, res) => {
   }
 });
 
+// router.get("/", async (req, res) => {
+//   try {
+//     const userId = req.user.id; // Assuming you use JWT and middleware sets req.user
+//     const restaurants = await Restaurant.find({ owner: userId }).populate(
+//       "orders foodItems"
+//     );
+//     res.status(200).json(restaurants);
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error fetching restaurants", error: error.message });
+//   }
+// });
 
+// router.get("/", async (req, res) => {
+//   try {
+//     const ownerId = req.user?.id;
+//     if (!ownerId) {
+//       return res.status(400).json({ message: "Missing owner ID" });
+//     }
 
+//     const restaurants = await Restaurant.find({ owner: ownerId });
+//     return res.json({ restaurants });
+//   } catch (err) {
+//     console.error(err);
+//     return res.status(500).json({
+//       message: "Error fetching restaurants",
+//       error: err.message,
+//     });
+//   }
+// });
+// Get all restaurants
+// router.get("/restaurants", async (req, res) => {
+//   try {
+//     const restaurants = await Restaurant.find().populate("orders");
+//     res.status(200).json(restaurants);
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Error fetching restaurants", error: error.message });
+//   }
+// });
 
+// Get all restaurants
 router.get("/", async (req, res) => {
   try {
-    const userId = req.user.id; // Assuming you use JWT and middleware sets req.user
-    const restaurants = await Restaurant.find({ owner: userId }).populate(
-      "orders foodItems"
-    );
+    const restaurants = await Restaurant.find();
     res.status(200).json(restaurants);
   } catch (error) {
     res
@@ -74,7 +107,6 @@ router.get("/", async (req, res) => {
       .json({ message: "Error fetching restaurants", error: error.message });
   }
 });
-
 router.get("/:id", async (req, res) => {
   try {
     // const restaurant = await Restaurant.findById(req.params.id).select('name location');

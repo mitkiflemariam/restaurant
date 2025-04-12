@@ -33,7 +33,7 @@ export default function Login() {
       }
 
       // localStorage.setItem("token", response.token);
-      login(response.token, response.username || formData.email, response.role);
+      login(response.token, response.username || formData.email, response.role, response.ownerId);
       navigate("/", { replace: true });
     } catch (err) {
       // console.error("Error details:", err.response?.data); // Log server response
