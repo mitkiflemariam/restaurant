@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import Order from "@/pages/Order";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Helper function to get appropriate food images if no image is provided
 const getDefaultFoodImage = (category, name) => {
@@ -43,6 +43,8 @@ const getDefaultFoodImage = (category, name) => {
 
 const RestaurantDashBoard = () => {
   // Featured dishes shown directly without API call
+  const location = useLocation(); // Get location object
+  const restaurant = location.state?.restaurant || null;
   const featuredDishes = [
     {
       _id: 1,
@@ -73,19 +75,63 @@ const RestaurantDashBoard = () => {
     },
   ];
 
+  // Optionally fetch featured dishes based on restaurant._id
+  // useEffect(() => {
+  //   const fetchFeaturedDishes = async () => {
+  //     if (restaurant?._id) {
+  //       try {
+  //         const response = await axios.get(
+  //           `http://localhost:3000/api/food-items?restaurant=${restaurant._id}`
+  //         );
+  //         let foodItems = [];
+
+  //         if (Array.isArray(response.data)) {
+  //           foodItems = response.data;
+  //         } else if (response.data && Array.isArray(response.data.foods)) {
+  //           foodItems = response.data.foods;
+  //         }
+
+  //         // Process images and limit to 3 featured dishes
+  //         const processedDishes = foodItems.slice(0, 3).map((dish) => ({
+  //           ...dish,
+  //           image: dish.image || getDefaultFoodImage(dish.category, dish.name),
+  //         }));
+
+  //         if (processedDishes.length > 0) {
+  //           setFeaturedDishes(processedDishes);
+  //         }
+  //       } catch (error) {
+  //         console.error("Failed to fetch featured dishes:", error);
+  //       }
+  //     }
+  //   };
+
+  //   fetchFeaturedDishes();
+  // }, [restaurant]);
+  const defaultBanner =
+  "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop";
+  // "https://images.unsplash.com/photo-1578660903866-de6529cbb9fe?q=80&w=1952&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+
   return (
     <main className="flex flex-col w-full min-h-screen bg-white p-6 shadow-md">
       <section className="relative h-[40vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-black/40 z-10"></div>
-        <div className="bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center absolute inset-0"></div>
+        {/* <div className="bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center absolute inset-0"></div> */}
+        <div
+          className="bg-cover bg-center absolute inset-0"
+          style={{
+            backgroundImage: `url(${restaurant?.image || defaultBanner})`,
+          }}
+        ></div>
         <div className="container mx-auto px-4 relative z-20 text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-            {/* {restaurant.name} || Restaurant Name */}
-            Restaurant Name
+            {restaurant?.name || "Restaurant Name"} 
+            
+            {/* Restaurant Name */}
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto font-light">
             {/* {restaurant.description} || Restaurant description */}
-             Restaurant description
+            {restaurant?.desc || "Restaurant description"}
           </p>
           <Dialog>
             <Link to="/order" aria-label="order" className="w-full">

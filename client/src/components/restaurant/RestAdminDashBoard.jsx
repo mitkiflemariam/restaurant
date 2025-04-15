@@ -7,8 +7,11 @@ import FoodItemsTable from "../admin/FoodItemsTable";
 import RestaurantsTable from "../admin/RestaurantsTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserIcon, Utensils, Store } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 const RestAdminDashBoard = () => {
+  const location = useLocation(); // Get location object
+  const restaurant = location.state?.restaurant || null; //Extract restaurant from state
   const [users, setUsers] = useState([]);
   const [foods, setFoods] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
@@ -178,7 +181,7 @@ const RestAdminDashBoard = () => {
     fetchUsers();
     fetchFoods();
     fetchRestaurants();
-  }, []);
+  }, [restaurant]);
 
   // Sorting logic for users
   const requestSort = (key) => {

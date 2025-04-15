@@ -34,6 +34,10 @@ const Navbar = () => {
             console.log(myRestaurant);
             setRestaurant(myRestaurant);
             navigate("/restaurantdashboard");
+            if (myRestaurant) {
+              // Navigate with restaurant data in state
+              navigate("/restaurantdashboard", { state: { restaurant: myRestaurant } });
+            }
           } else {
             console.error("Expected an array but got:", data);
           }

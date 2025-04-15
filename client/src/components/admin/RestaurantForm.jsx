@@ -13,6 +13,7 @@ const RestaurantForm = ({ isOpen, onClose, restaurant, onSubmit, mode }) => {
   // State for form data and UI
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
+  const [image, setImage]=useState("")
   const [nameError, setNameError] = useState("");
   const [locationError, setLocationError] = useState("");
   const [formError, setFormError] = useState("");
@@ -23,10 +24,12 @@ const RestaurantForm = ({ isOpen, onClose, restaurant, onSubmit, mode }) => {
     if (restaurant && mode === "edit") {
       setName(restaurant.name || "");
       setLocation(restaurant.location || "");
+      setImage(restaurant.image || "");
     } else {
       // Reset form for new restaurant
       setName("");
       setLocation("");
+      setImage("");
     }
     // Clear any errors
     setNameError("");
@@ -53,6 +56,10 @@ const RestaurantForm = ({ isOpen, onClose, restaurant, onSubmit, mode }) => {
     
     if (!location.trim()) {
       setLocationError("Location is required");
+      isValid = false;
+    }
+    if (!image.trim()) {
+      setImageError("Location is required");
       isValid = false;
     }
     
@@ -132,6 +139,25 @@ const RestaurantForm = ({ isOpen, onClose, restaurant, onSubmit, mode }) => {
                 {locationError && (
                   <p className="text-sm text-red-500 mt-1">{locationError}</p>
                 )}
+              </div>
+            </div>
+            {/* Location Field */}
+            <div className="flex items-center gap-4 mb-2">
+              <label htmlFor="location" className="text-sm font-medium w-1/3">
+                Image
+              </label>
+              <div className="w-2/3">
+                <Input
+                  id="image"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                  placeholder="Enter image"
+                  autoComplete="off"
+                  // className={locationError ? "border-red-500" : ""}
+                />
+                {/* {locationError && (
+                  <p className="text-sm text-red-500 mt-1">{locationError}</p>
+                )} */}
               </div>
             </div>
             
